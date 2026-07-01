@@ -87,37 +87,11 @@ const stageCaption = document.querySelector("#stageCaption");
 const checklistTitle = document.querySelector("#checklistTitle");
 const checklist = document.querySelector("#checklist");
 const leaderTip = document.querySelector("#leaderTip");
-const timelineTitle = document.querySelector("#timelineTitle");
-const timeline = document.querySelector("#timeline");
-const timeReadout = document.querySelector("#timeReadout");
 const playButton = document.querySelector("#playButton");
 const replayButton = document.querySelector("#replayButton");
 
 function activeLesson() {
   return lessons[state.lessonIndex];
-}
-
-function twoDigits(value) {
-  return String(value).padStart(2, "0");
-}
-
-function durationToSeconds(duration) {
-  const [minutes, seconds] = duration.split(":").map(Number);
-  return (minutes * 60) + seconds;
-}
-
-function formatClock(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${twoDigits(minutes)}:${twoDigits(remainingSeconds)}`;
-}
-
-function formatElapsed() {
-  const lesson = activeLesson();
-  const totalSeconds = durationToSeconds(lesson.duration);
-  const denominator = Math.max(lesson.steps.length - 1, 1);
-  const elapsedSeconds = Math.round((state.stepIndex / denominator) * totalSeconds);
-  return `${formatClock(elapsedSeconds)} / ${lesson.duration}`;
 }
 
 function lessonIcon(id) {
@@ -157,22 +131,6 @@ function renderChecklist() {
     </li>
   `).join("");
   leaderTip.textContent = lesson.tip;
-}
-
-function renderTimeline() {
-  const lesson = activeLesson();
-  timelineTitle.textContent = `${lesson.title} scenes`;
-  timeline.style.setProperty("--step-count", lesson.steps.length);
-  const progress = lesson.steps.length === 1
-    ? 100
-    : (state.stepIndex / (lesson.steps.length - 1)) * 100;
-  timeline.style.setProperty("--progress", `${progress}%`);
-  timeline.innerHTML = lesson.steps.map((step, index) => `
-    <button class="timeline-step ${index === state.stepIndex ? "is-current" : ""}" type="button" data-step-index="${index}">
-      <span class="timeline-marker">${index + 1}</span>
-      <span>${step.title}</span>
-    </button>
-  `).join("");
 }
 
 function roomBase(extraClass = "") {
@@ -444,11 +402,9 @@ function render() {
   lessonTitle.textContent = lesson.title;
   lessonSource.textContent = lesson.source;
   lessonStatus.textContent = `Step ${state.stepIndex + 1} of ${lesson.steps.length}`;
-  timeReadout.textContent = formatElapsed();
   playButton.disabled = state.isPlaying;
   renderLessonList();
   renderChecklist();
-  renderTimeline();
   renderStage();
 }
 
@@ -489,14 +445,6 @@ lessonList.addEventListener("click", (event) => {
   stopPlayback();
   state.lessonIndex = Number(button.dataset.lessonIndex);
   state.stepIndex = 0;
-  render();
-});
-
-timeline.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-step-index]");
-  if (!button) return;
-  stopPlayback();
-  state.stepIndex = Number(button.dataset.stepIndex);
   render();
 });
 
