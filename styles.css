@@ -685,8 +685,128 @@ button {
   animation: zoneGlow 1.6s ease-in-out infinite;
 }
 
-.lesson-stage.is-playing .motion-arrow {
+.stage-pairing-video .adult-arrival-video,
+.stage-pairing-video .adult-seated,
+.stage-pairing-video .setup-board-complete,
+.stage-pairing-video .bag-mouth-open,
+.stage-pairing-video .loose-pieces-video,
+.stage-pairing-video .next-player-video,
+.stage-pairing-video .next-player-ghost,
+.stage-pairing-video .separation-video {
+  opacity: 0;
+}
+
+.stage-pairing-video .adult-arrival-video,
+.stage-pairing-video .adult-seated,
+.stage-pairing-video .setup-board-complete,
+.stage-pairing-video .setup-bag-video,
+.stage-pairing-video .loose-pieces-video,
+.stage-pairing-video .next-player-video,
+.stage-pairing-video .next-player-ghost,
+.stage-pairing-video .separation-video,
+.stage-pairing-video .leader-video {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.stage-pairing-video .callout {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.stage-pairing-video.phase-0 .callout-1,
+.stage-pairing-video.phase-1 .callout-2,
+.stage-pairing-video.phase-2 .callout-3,
+.stage-pairing-video.phase-3 .callout-4 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage-pairing-video.phase-0 .adult-arrival-video,
+.stage-pairing-video.phase-1 .adult-seated-first,
+.stage-pairing-video.phase-2 .adult-seated-first,
+.stage-pairing-video.phase-3 .adult-seated-first,
+.stage-pairing-video.phase-3 .adult-seated-next,
+.stage-pairing-video.phase-1 .setup-board-complete,
+.stage-pairing-video.phase-2 .setup-board-complete,
+.stage-pairing-video.phase-3 .setup-board-complete,
+.stage-pairing-video.phase-1 .bag-mouth-open,
+.stage-pairing-video.phase-1 .loose-pieces-video,
+.stage-pairing-video.phase-2 .next-player-video,
+.stage-pairing-video.phase-3 .separation-video {
+  opacity: 1;
+}
+
+.stage-pairing-video.phase-2 .next-player-video {
+  translate: -232px -132px;
+}
+
+.stage-pairing-video.phase-3 .setup-table-video {
+  opacity: 0.72;
+}
+
+.stage-pairing-video.phase-3 .separation-line,
+.stage-pairing-video.phase-3 .adult-guide-arrow,
+.stage-pairing-video.phase-3 .junior-guide-arrow {
+  opacity: 1;
+}
+
+.stage-pairing-video.phase-0.is-playing .adult-arrival-video {
+  animation: adultWalkSitVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-0.is-playing .adult-seated-first {
+  animation: seatedAppearVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-0.is-playing .leader-video {
+  animation: leaderInviteVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-1.is-playing .setup-bag-video {
+  animation: bagOpenVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-1.is-playing .bag-mouth-open {
+  animation: bagMouthVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-1.is-playing .loose-pieces-video {
+  animation: piecesFromBagVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-1.is-playing .setup-board-complete {
+  animation: boardBuildVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-2.is-playing .next-player-video {
+  animation: nextPlayerWalkVideo 2.45s ease-in-out both;
+}
+
+.stage-pairing-video.phase-2.is-playing .leader-video {
+  animation: leaderGuideVideo 1.05s ease-in-out infinite;
+}
+
+.stage-pairing-video.phase-3.is-playing .adult-zone,
+.stage-pairing-video.phase-3.is-playing .junior-zone {
+  animation: zoneGlow 1.4s ease-in-out infinite;
+}
+
+.stage-pairing-video.phase-3.is-playing .separation-video {
+  animation: separationAppearVideo 2.45s ease-out both;
+}
+
+.lesson-stage.is-playing.phase-0 .arrow-seat,
+.lesson-stage.is-playing.phase-1 .arrow-board,
+.lesson-stage.is-playing.phase-2 .arrow-player,
+.lesson-stage.is-playing.phase-3 .separation-line,
+.lesson-stage.is-playing.phase-3 .adult-guide-arrow,
+.lesson-stage.is-playing.phase-3 .junior-guide-arrow {
   animation: drawArrow 1.25s ease-in-out infinite;
+}
+
+.stage-decisions .decision-arrow {
+  opacity: 1;
 }
 
 .lesson-stage.is-playing .clock-hand {
@@ -810,6 +930,150 @@ button {
   }
   50% {
     transform: translateX(22px);
+  }
+}
+
+@keyframes adultWalkSitVideo {
+  0% {
+    translate: -340px 26px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  58% {
+    translate: -62px 8px;
+    opacity: 1;
+  }
+  82% {
+    translate: 0 0;
+    opacity: 1;
+  }
+  100% {
+    translate: 0 0;
+    opacity: 0;
+  }
+}
+
+@keyframes seatedAppearVideo {
+  0%, 68% {
+    opacity: 0;
+    translate: 0 -10px;
+  }
+  82%, 100% {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes leaderInviteVideo {
+  0%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  34% {
+    translate: -10px -2px;
+    rotate: -2deg;
+  }
+  66% {
+    translate: -4px 0;
+    rotate: 2deg;
+  }
+}
+
+@keyframes bagOpenVideo {
+  0%, 100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  22% {
+    rotate: -5deg;
+    translate: -10px -8px;
+  }
+  52% {
+    rotate: 4deg;
+    translate: 8px -2px;
+  }
+}
+
+@keyframes bagMouthVideo {
+  0%, 30% {
+    opacity: 0;
+    transform: scaleX(0.15);
+  }
+  46%, 100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes piecesFromBagVideo {
+  0%, 26% {
+    translate: -32px 24px;
+    opacity: 0;
+  }
+  54% {
+    translate: 12px -20px;
+    opacity: 1;
+  }
+  82%, 100% {
+    translate: 82px -20px;
+    opacity: 0.78;
+  }
+}
+
+@keyframes boardBuildVideo {
+  0%, 34% {
+    opacity: 0;
+    transform: scale(0.72) rotate(-5deg);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.05) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes nextPlayerWalkVideo {
+  0% {
+    translate: 160px 8px;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  42% {
+    translate: 30px -46px;
+    opacity: 1;
+  }
+  82%, 100% {
+    translate: -232px -132px;
+    opacity: 1;
+  }
+}
+
+@keyframes leaderGuideVideo {
+  0%, 100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  50% {
+    rotate: -3deg;
+    translate: -8px -2px;
+  }
+}
+
+@keyframes separationAppearVideo {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.15);
+  }
+  40%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 

@@ -78,6 +78,8 @@ const state = {
   timer: null
 };
 
+const PLAY_STEP_MS = 2600;
+
 const lessonList = document.querySelector("#lessonList");
 const lessonTitle = document.querySelector("#lessonTitle");
 const lessonSource = document.querySelector("#lessonSource");
@@ -223,7 +225,7 @@ function standingPerson(x, y, options = {}) {
 function callout(index, x, y, title, current = false) {
   return `
     <g class="callout callout-${index}">
-      <rect x="${x}" y="${y}" width="164" height="48" rx="7" class="label-box"></rect>
+      <rect x="${x}" y="${y}" width="198" height="48" rx="7" class="label-box"></rect>
       <circle cx="${x + 24}" cy="${y + 24}" r="16" class="${current ? "stage-number-current" : "stage-number"}"></circle>
       <text x="${x + 24}" y="${y + 31}" text-anchor="middle" fill="${current ? "#111" : "#fff"}" font-size="18" font-weight="860">${index}</text>
       <text x="${x + 50}" y="${y + 30}">${title}</text>
@@ -233,53 +235,93 @@ function callout(index, x, y, title, current = false) {
 
 function pairingStage() {
   return `
-    ${roomBase("stage-pairing")}
-      <path d="M76 338h318l-34 150H0V338z" fill="#dff2ef" class="highlight-zone adult-zone group-focus"></path>
-      <path d="M645 338h315v222H630z" fill="#fff1bf" class="highlight-zone junior-zone group-focus"></path>
-      <path d="M538 188c28 15 62 20 106 11" class="motion-arrow arrow-player" marker-end="url(#arrowHead)"></path>
-      <path d="M278 420c24-42 62-50 102-26" class="motion-arrow arrow-board" marker-end="url(#arrowHead)"></path>
-      <path d="M485 260c-30-31-72-44-126-40" class="motion-arrow arrow-seat" marker-end="url(#arrowHead)"></path>
-      <path d="M498 126v332" class="motion-arrow separation-line" stroke="#111" stroke-dasharray="10 12"></path>
+    ${roomBase("stage-pairing stage-pairing-video")}
+      <path d="M0 332h482v228H0z" fill="#dff2ef" class="highlight-zone adult-zone group-focus"></path>
+      <path d="M520 332h440v228H520z" fill="#fff1bf" class="highlight-zone junior-zone group-focus"></path>
 
-      <g class="group-label">
-        <rect x="178" y="92" width="168" height="72" class="label-teal"></rect>
-        <text x="262" y="122" text-anchor="middle" fill="#fff">ADULT</text>
-        <text x="262" y="150" text-anchor="middle" fill="#fff">PLAYERS</text>
-        <rect x="656" y="98" width="154" height="64" class="label-gold"></rect>
-        <text x="733" y="128" text-anchor="middle">JUNIOR</text>
-        <text x="733" y="153" text-anchor="middle">PLAYERS</text>
+      <g class="group-label adult-label-video">
+        <rect x="146" y="82" width="176" height="68" class="label-teal"></rect>
+        <text x="234" y="113" text-anchor="middle" fill="#fff">ADULT</text>
+        <text x="234" y="139" text-anchor="middle" fill="#fff">PLAYERS</text>
+      </g>
+      <g class="group-label junior-label-video">
+        <rect x="668" y="86" width="164" height="64" class="label-gold"></rect>
+        <text x="750" y="116" text-anchor="middle">JUNIOR</text>
+        <text x="750" y="141" text-anchor="middle">PLAYERS</text>
       </g>
 
-      <g class="seat-focus">
-        <rect x="184" y="210" width="155" height="78" rx="7" class="table-top"></rect>
-        ${board(212, 224, 0.52)}
-        ${seatedPerson(128, 188, { glasses: true })}
-        ${seatedPerson(318, 188)}
+      <g class="adult-table-video seat-focus">
+        <rect x="145" y="220" width="188" height="84" rx="7" class="table-top"></rect>
+        ${board(181, 233, 0.52)}
+        <path d="M108 224l18 86h42l-14-86z" class="chair"></path>
+        <path d="M324 224l-18 86h-42l14-86z" class="chair"></path>
+        <g class="adult-seated adult-seated-first">
+          ${seatedPerson(93, 184, { glasses: true })}
+        </g>
+        <g class="adult-seated adult-seated-next">
+          ${seatedPerson(315, 184)}
+        </g>
       </g>
 
-      <g>
-        <rect x="652" y="228" width="150" height="72" rx="7" class="table-top"></rect>
-        ${board(682, 241, 0.45)}
-        ${seatedPerson(592, 205, { gold: true, hair: true })}
-        ${seatedPerson(790, 205, { gold: true })}
+      <g class="junior-table-video">
+        <rect x="676" y="224" width="178" height="80" rx="7" class="table-top"></rect>
+        ${board(713, 237, 0.48)}
+        <path d="M634 228l18 80h38l-13-80z" class="chair chair-gold"></path>
+        <path d="M846 228l-18 80h-38l13-80z" class="chair chair-gold"></path>
+        ${seatedPerson(616, 188, { gold: true, child: true, hair: true })}
+        ${seatedPerson(832, 188, { gold: true, child: true })}
       </g>
 
-      <g class="board-focus">
-        <path d="M38 430l210-74 286 42-246 126z" class="table-top"></path>
-        ${board(196, 372, 1.08)}
-        ${plasticChessBag(70, 404, 0.92)}
-        <path d="M440 404h52v96h-52z" class="chair"></path>
-        <path d="M318 490h74v66h-74z" class="chair"></path>
+      <g class="separation-video">
+        <path d="M500 96v402" class="motion-arrow separation-line" stroke="#111" stroke-dasharray="12 14"></path>
+        <path d="M502 276c56-52 100-70 150-60" class="motion-arrow junior-guide-arrow" marker-end="url(#arrowHead)"></path>
+        <path d="M486 276c-54-47-100-63-152-48" class="motion-arrow adult-guide-arrow" marker-end="url(#arrowHead)"></path>
       </g>
 
-      ${standingPerson(470, 248, { shirt: true, leader: true })}
-      ${standingPerson(610, 398, { child: true, walking: true })}
-      ${standingPerson(560, 438, { child: true, ghost: true })}
+      <g class="setup-table-video board-focus">
+        <path d="M96 428l214-76 300 42-260 130z" class="table-top"></path>
+        <g class="setup-board-empty">
+          <rect x="256" y="383" width="150" height="150" fill="#fff8e9" stroke="#111" stroke-width="4"></rect>
+        </g>
+        <g class="setup-board-complete">
+          ${board(256, 383, 1.04)}
+        </g>
+        <g class="setup-bag-video">
+          ${plasticChessBag(126, 408, 0.9)}
+          <path d="M134 446c24 16 70 18 96 2" class="bag-mouth-open"></path>
+        </g>
+        <g class="loose-pieces-video">
+          <circle cx="226" cy="430" r="6" fill="#111"></circle>
+          <circle cx="242" cy="454" r="6" fill="#fff" stroke="#111" stroke-width="3"></circle>
+          <path d="M214 474h22M225 456v18" class="line-art thin-line"></path>
+          <path d="M250 424h12l-5 12 8 22h-20l8-22z" fill="#111"></path>
+        </g>
+        <path d="M456 414h54v96h-54z" class="chair"></path>
+        <path d="M340 502h78v60h-78z" class="chair"></path>
+      </g>
 
-      ${callout(1, 94, 190, "Take a seat", state.stepIndex === 0)}
-      ${callout(2, 82, 392, "Set up board", state.stepIndex === 1)}
-      ${callout(3, 668, 406, "Bring next", state.stepIndex === 2)}
-      ${callout(4, 778, 178, "Keep separate", state.stepIndex === 3)}
+      <g class="leader-video">
+        ${standingPerson(496, 254, { shirt: true, leader: true })}
+      </g>
+
+      <g class="adult-arrival-video">
+        ${standingPerson(380, 246)}
+      </g>
+      <g class="next-player-video">
+        ${standingPerson(628, 404)}
+      </g>
+      <g class="next-player-ghost">
+        ${standingPerson(782, 404, { ghost: true })}
+      </g>
+
+      <path d="M438 244c-34-28-76-38-122-28" class="motion-arrow arrow-seat" marker-end="url(#arrowHead)"></path>
+      <path d="M238 418c32-35 70-45 122-30" class="motion-arrow arrow-board" marker-end="url(#arrowHead)"></path>
+      <path d="M590 398c-48-18-92-48-114-90" class="motion-arrow arrow-player" marker-end="url(#arrowHead)"></path>
+
+      ${callout(1, 94, 176, "Take a seat", state.stepIndex === 0)}
+      ${callout(2, 100, 382, "Set up board", state.stepIndex === 1)}
+      ${callout(3, 642, 392, "Bring next", state.stepIndex === 2)}
+      ${callout(4, 740, 172, "Keep separate", state.stepIndex === 3)}
     </svg>
   `;
 }
@@ -394,7 +436,7 @@ function renderStage() {
     decisions: decisionStage
   };
   stageMount.innerHTML = renderers[lesson.id]();
-  stageCaption.textContent = lesson.caption;
+  stageCaption.textContent = lesson.id === "pairing" ? lesson.steps[state.stepIndex].detail : lesson.caption;
 }
 
 function render() {
@@ -429,7 +471,7 @@ function play() {
     }
     state.stepIndex += 1;
     render();
-  }, 1800);
+  }, PLAY_STEP_MS);
 }
 
 function replay() {
