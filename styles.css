@@ -16,7 +16,7 @@
   --danger: #d84b39;
   --shadow: 0 18px 42px rgba(23, 35, 34, 0.1);
   --radius: 8px;
-  --stage-height: clamp(260px, calc(100vh - 460px), 560px);
+  --stage-min-height: 520px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 
@@ -130,21 +130,17 @@ button {
 }
 
 .learning-app {
-  height: calc(100vh - 76px);
-  min-height: 620px;
+  min-height: calc(100vh - 76px);
   display: grid;
   grid-template-columns: minmax(190px, 230px) minmax(0, 1fr) minmax(270px, 320px);
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
   grid-template-areas:
     "lessons stage checklist"
     "timeline timeline timeline";
-  overflow: hidden;
 }
 
 .lesson-rail {
   grid-area: lessons;
-  min-height: 0;
-  overflow: auto;
   padding: 24px 0 24px 0;
   background: rgba(255, 255, 255, 0.72);
   border-right: 1px solid var(--line);
@@ -219,8 +215,6 @@ button {
 .stage-column {
   grid-area: stage;
   min-width: 0;
-  min-height: 0;
-  overflow: auto;
   padding: 24px;
   border-right: 1px solid var(--line);
 }
@@ -263,8 +257,9 @@ button {
 .animation-frame {
   position: relative;
   overflow: hidden;
-  min-height: 260px;
-  height: var(--stage-height);
+  min-height: var(--stage-min-height);
+  max-height: 70vh;
+  aspect-ratio: 960 / 560;
   background: var(--surface);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
@@ -365,8 +360,6 @@ button {
 
 .checklist-panel {
   grid-area: checklist;
-  min-height: 0;
-  overflow: auto;
   padding: 24px 20px;
   background: rgba(255, 255, 255, 0.82);
 }
@@ -923,6 +916,10 @@ button {
 }
 
 @media (max-width: 1080px) {
+  :root {
+    --stage-min-height: 460px;
+  }
+
   .learning-app {
     grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
     grid-template-areas:
@@ -947,7 +944,7 @@ button {
 
 @media (max-width: 760px) {
   :root {
-    --stage-height: 430px;
+    --stage-min-height: 380px;
   }
 
   .topbar {
@@ -971,19 +968,15 @@ button {
   }
 
   .learning-app {
-    height: auto;
-    min-height: auto;
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "lessons"
       "stage"
       "checklist"
       "timeline";
-    overflow: visible;
   }
 
   .lesson-rail {
-    overflow: visible;
     padding: 14px 0;
     border-right: 0;
     border-bottom: 1px solid var(--line);
@@ -1023,11 +1016,6 @@ button {
     padding-right: 14px;
   }
 
-  .stage-column,
-  .checklist-panel {
-    overflow: visible;
-  }
-
   .stage-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -1039,7 +1027,11 @@ button {
   }
 
   .animation-frame {
-    min-height: 370px;
+    width: 100%;
+    height: var(--stage-min-height);
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
   }
 
   .checklist {
@@ -1077,7 +1069,7 @@ button {
 
 @media (max-width: 480px) {
   :root {
-    --stage-height: 360px;
+    --stage-min-height: 340px;
   }
 
   .brand-board {
