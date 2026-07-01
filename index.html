@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MK Chess Session Leader</title>
+    <meta
+      name="description"
+      content="Replayable MK Chess session leader training animations for setup, greeting, pairing, safeguarding, and decision making."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#app" aria-label="MK Chess Session Leader home">
+          <span class="brand-board" aria-hidden="true"></span>
+          <span>
+            <span class="brand-name">MK Chess</span>
+            <span class="brand-subtitle">Session Leader</span>
+          </span>
+        </a>
+        <nav class="top-actions" aria-label="Training navigation">
+          <button class="top-action" type="button" data-action="focus-lessons">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.8c2.5 0 4.2.4 6 1.6v12c-1.8-1.2-3.5-1.6-6-1.6V5.8Z"></path>
+              <path d="M20 5.8c-2.5 0-4.2.4-6 1.6v12c1.8-1.2 3.5-1.6 6-1.6V5.8Z"></path>
+              <path d="M12 7.4v12"></path>
+            </svg>
+            Lessons
+          </button>
+          <button class="top-action" type="button" data-action="restart">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.4"></circle>
+              <path d="M5.8 20c.7-3.4 3.1-5.2 6.2-5.2s5.5 1.8 6.2 5.2"></path>
+            </svg>
+            Leader
+          </button>
+        </nav>
+      </header>
+
+      <main id="app" class="learning-app" aria-live="polite">
+        <aside class="lesson-rail" aria-label="Lesson list">
+          <h2>Lessons</h2>
+          <div id="lessonList" class="lesson-list"></div>
+        </aside>
+
+        <section class="stage-column" aria-labelledby="lessonTitle">
+          <div class="stage-heading">
+            <div>
+              <p id="lessonSource" class="source-label">Bletchley session checklist</p>
+              <h1 id="lessonTitle">Pairing</h1>
+            </div>
+            <div id="lessonStatus" class="lesson-status">Step 1 of 4</div>
+          </div>
+
+          <div id="animationFrame" class="animation-frame">
+            <div id="stageMount" class="stage-mount"></div>
+            <div id="stageCaption" class="stage-caption"></div>
+          </div>
+
+          <div class="control-row" aria-label="Playback controls">
+            <button id="playButton" class="primary-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5.5v13l10-6.5-10-6.5Z"></path>
+              </svg>
+              Play
+            </button>
+            <button id="replayButton" class="secondary-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 12a7 7 0 1 1-2.1-5"></path>
+                <path d="M19 5v5h-5"></path>
+              </svg>
+              Replay
+            </button>
+          </div>
+        </section>
+
+        <aside class="checklist-panel" aria-labelledby="checklistTitle">
+          <h2 id="checklistTitle">Pairing checklist</h2>
+          <ol id="checklist" class="checklist"></ol>
+          <div class="leader-tip">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M8.2 14.7a6 6 0 1 1 7.6 0c-.8.6-.8 1.4-.8 2.3H9c0-.9 0-1.7-.8-2.3Z"></path>
+            </svg>
+            <div>
+              <strong>Leader tip</strong>
+              <p id="leaderTip"></p>
+            </div>
+          </div>
+        </aside>
+
+        <section class="timeline-panel" aria-label="Lesson progress">
+          <div class="timeline-heading">
+            <h2 id="timelineTitle">Pairing scenes</h2>
+            <span id="timeReadout">00:00 / 01:20</span>
+          </div>
+          <div id="timeline" class="timeline"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
